@@ -1,0 +1,29 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on push to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # The GitHub Actions runner uses Ubuntu
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2  # Checkout the code
+
+    - name: Set up SSH keys
+      uses: webfactory/ssh-agent@v0.5.3  # Use the ssh-agent action to set up SSH key
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to server
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          cd /home/${{ secrets.SERVER_USER }}/dsc/CTFchalls/
+          docker-compose down
+          git pull origin main
+          docker-compose up --build -d
+        EOF
+
