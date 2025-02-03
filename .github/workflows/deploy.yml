@@ -21,7 +21,7 @@ jobs:
     - name: Deploy to server
       run: |
         ssh -o StrictHostKeyChecking=no vasudevshetty@server.fauxigent.com << 'EOF'
-          cd /home/${{ secrets.SERVER_USER }}/dsc/CTFchalls/
+          cd /home/vasudevshetty/dsc/CTFchalls/
           docker-compose down
           git pull origin main
           docker-compose up --build -d
