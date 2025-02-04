@@ -100,6 +100,36 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.reverse.rule=Host(`reverse.ctf.dscjssstuniv.in`)"
 
+  factorial:
+    build:
+      context: coding/CalcFactorial/src
+    image: factorial
+    restart: always
+    working_dir: /home/ctf
+    container_name: misc_factorial
+    ports:
+      - "54319:54319"
+    networks:
+      - ctf_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.factorial.rule=Host(`factorial.ctf.dscjssstuniv.in`)"  # Routing for this challenge
+
+  vowels:
+    build:
+       context: coding/CountVowel/src
+    image: cod_vowel
+    restart: always
+    working_dir: /home/ctf
+    container_name: cod_vowel
+    ports:
+      - "54318:54318"
+    networks:
+      - ctf_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vowel.rule=Host(`vowel.ctf.dscjssstuniv.in`)"  # Routing for this challenge
+
   conditions:
     build:
       context: Web/Conditions/src
