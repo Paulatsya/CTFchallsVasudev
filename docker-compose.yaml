@@ -205,6 +205,21 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.websqli.rule=Host(`sqli.ctf.dscjssstuniv.in`)"
 
+  odd_eve:
+    build:
+      context: misc/src/OddEve/
+    image: odd_eve
+    restart: always
+    working_dir: /home/ctf
+    container_name: odd_eve
+    ports:
+      - "54317:54317"
+    networks:
+      - ctf_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.oddeve.rule=Host(`oddeve.ctf.dscjssstuniv.in`)"      
+
 networks:
   ctf_network:
     driver: bridge
